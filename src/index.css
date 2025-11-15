@@ -4,43 +4,78 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-geist: 'Geist', system-ui, sans-serif;
-    --font-geist-mono: 'Geist Mono', monospace;
-    --font-mona: 'Mona Sans', system-ui, sans-serif;
-    --font-ibm-plex: 'IBM Plex Sans', system-ui, sans-serif;
-    --font-manrope: 'Manrope', system-ui, sans-serif;
+    --bg-dark: #1A1A1A;
+    --lavender: #C4A1FF;
+    --lavender-2: #B57EDC;
+    --lavender-3: #A68EFF;
+    --glass-white: rgba(255,255,255,0.06);
+    --glass-border: rgba(255,255,255,0.18);
+    --radius-xl: 28px;
   }
 
   html {
-    font-family: var(--font-sans);
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Manrope', 'IBM Plex Sans', sans-serif;
+    background: var(--bg-dark);
+    color-scheme: dark;
   }
 
   body {
-    @apply antialiased;
+    @apply antialiased bg-[var(--bg-dark)] text-white;
   }
 }
 
-/* Custom utility classes for shadcn/ui patterns */
 @layer utilities {
-  .animate-in {
-    animation-name: animateIn;
-    animation-duration: 350ms;
-    --tw-enter-opacity: initial;
-    --tw-enter-scale: initial;
-    --tw-enter-rotate: initial;
-    --tw-enter-translate-x: initial;
-    --tw-enter-translate-y: initial;
+  .glass {
+    background: var(--glass-white);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
   }
+  .glow-lavender {
+    box-shadow: 0 0 0 1px rgba(196,161,255,0.35), 0 0 25px rgba(196,161,255,0.18), inset 0 0 20px rgba(196,161,255,0.06);
+  }
+  .btn-glass {
+    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 9999px;
+    transition: all 200ms ease;
+  }
+  .btn-glass:hover { transform: translateY(-1px); box-shadow: 0 10px 25px rgba(196,161,255,0.25); }
+  .btn-primary {
+    background: radial-gradient(120% 120% at 50% 0%, rgba(196,161,255,0.35) 0%, rgba(196,161,255,0.08) 60%, rgba(255,255,255,0.04) 100%);
+    border: 1px solid rgba(196,161,255,0.45);
+    color: white;
+  }
+  .lavender-text { color: var(--lavender); }
+  .lavender-bg { background-color: var(--lavender); }
+  .lavender-gradient { background: linear-gradient(90deg, var(--lavender-2), var(--lavender), var(--lavender-3)); }
+  .soft-shadow { box-shadow: 0 25px 80px rgba(0,0,0,0.45); }
+  .ring-lavender { box-shadow: 0 0 0 2px rgba(196,161,255,0.35); }
+  .neon-border { box-shadow: 0 0 0 1px rgba(196,161,255,0.45), inset 0 0 20px rgba(196,161,255,0.12); }
+  .rounded-3xl { border-radius: 28px; }
 
-  .animate-out {
-    animation-name: animateOut;
-    animation-duration: 350ms;
-    --tw-exit-opacity: initial;
-    --tw-exit-scale: initial;
-    --tw-exit-rotate: initial;
-    --tw-exit-translate-x: initial;
-    --tw-exit-translate-y: initial;
+  /* Floating label pattern */
+  .float-group { position: relative; }
+  .float-input { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; padding: 22px 16px 10px 16px; outline: none; color: #fff; width: 100%; transition: border 150ms ease, box-shadow 150ms ease, background 150ms ease; }
+  .float-label { position: absolute; left: 16px; top: 14px; color: rgba(255,255,255,0.7); pointer-events: none; transition: all 150ms ease; background: transparent; padding: 0 6px; }
+  .float-input:focus { border-color: rgba(196,161,255,0.65); box-shadow: 0 0 0 3px rgba(196,161,255,0.18); background: rgba(255,255,255,0.08); }
+  .float-input:focus + .float-label, .float-input:not(:placeholder-shown) + .float-label { top: 6px; font-size: 12px; color: var(--lavender); backdrop-filter: blur(2px); }
+
+  /* Page reveal */
+  .fade-in { animation: fadeIn 600ms ease both; }
+  .fade-up { animation: fadeUp 800ms ease both; }
+  @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: translateY(0) } }
+
+  /* Parallax backdrop blobs */
+  .backdrop-aurora {
+    position: fixed; inset: -10% -10% auto -10%; height: 60vh; z-index: 0; filter: blur(80px); opacity: 0.7; pointer-events: none;
+    background: radial-gradient(40% 40% at 20% 30%, rgba(196,161,255,0.25), transparent 60%),
+                radial-gradient(40% 40% at 80% 20%, rgba(165,142,255,0.20), transparent 60%),
+                radial-gradient(60% 60% at 50% 80%, rgba(181,126,220,0.16), transparent 70%);
   }
 }
